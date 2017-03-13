@@ -59,7 +59,7 @@ class Framer(object):
     """
     return datetime.datetime.utcnow().isoformat()
 
-  def next(self):
+  def __next__(self):
     msg = None
     while msg is None:
       try:
@@ -104,7 +104,7 @@ class Framer(object):
       return None
     elif ord(preamble) != SBP_PREAMBLE:
       if self._verbose:
-        print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
+        print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
       return None
     # hdr
     hdr = self._readall(5)
@@ -117,7 +117,7 @@ class Framer(object):
     crc = self._readall(2)
     crc, = struct.unpack("<H", crc)
     if crc != msg_crc:
-      print "crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc)
+      print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
       return None
     msg = SBP(msg_type, sender, msg_len, data, crc)
     try:

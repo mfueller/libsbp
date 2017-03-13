@@ -32,21 +32,21 @@ from . import imu as imu
 from . import ndb as ndb
 import warnings
 
-_SBP_TABLE = dict(acq.msg_classes.items()
-                  + boot.msg_classes.items()
-                  + file_io.msg_classes.items()
-                  + flash.msg_classes.items()
-                  + log.msg_classes.items()
-                  + nav.msg_classes.items()
-                  + obs.msg_classes.items()
-                  + piksi.msg_classes.items()
-                  + settings.msg_classes.items()
-                  + sys.msg_classes.items()
-                  + trac.msg_classes.items()
-                  + user.msg_classes.items()
-                  + imu.msg_classes.items()
-                  + ext_events.msg_classes.items()
-                  + ndb.msg_classes.items())
+_SBP_TABLE = dict(list(acq.msg_classes.items())
+                  + list(boot.msg_classes.items())
+                  + list(file_io.msg_classes.items())
+                  + list(flash.msg_classes.items())
+                  + list(log.msg_classes.items())
+                  + list(nav.msg_classes.items())
+                  + list(obs.msg_classes.items())
+                  + list(piksi.msg_classes.items())
+                  + list(settings.msg_classes.items())
+                  + list(sys.msg_classes.items())
+                  + list(trac.msg_classes.items())
+                  + list(user.msg_classes.items())
+                  + list(imu.msg_classes.items())
+                  + list(ext_events.msg_classes.items())
+                  + list(ndb.msg_classes.items()))
 
 class InvalidSBPMessageType(NotImplementedError):
   """

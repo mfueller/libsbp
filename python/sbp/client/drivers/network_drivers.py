@@ -42,7 +42,7 @@ class TCPDriver(BaseDriver):
     self.handle.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
       self.handle.connect((host, port))
-    except socket.error, msg:
+    except socket.error as msg:
       pass
     super(TCPDriver, self).__init__(self.handle)
     self._write_lock = threading.Lock()
@@ -61,7 +61,7 @@ class TCPDriver(BaseDriver):
       if not data:
         raise IOError
       return data
-    except socket.error, msg:
+    except socket.error as msg:
       raise IOError
 
   def flush(self):
@@ -79,7 +79,7 @@ class TCPDriver(BaseDriver):
     try:
       self._write_lock.acquire()
       self.handle.sendall(s)
-    except socket.error, msg:
+    except socket.error as msg:
       raise IOError
     finally:
       self._write_lock.release()

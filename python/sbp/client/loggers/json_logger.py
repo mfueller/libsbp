@@ -12,7 +12,7 @@ from ...msg import SBP
 from ...table import dispatch
 from .base_logger import BaseLogger, LogIterator
 from boto.s3.connection import S3Connection
-from cStringIO import StringIO
+from io import StringIO
 from gzip import GzipFile
 from operator import itemgetter
 import json
@@ -61,7 +61,7 @@ class JSONLogIterator(LogIterator):
 
   """
 
-  def next(self):
+  def __next__(self):
     """
     Return the next record tuple from log file containing
     JSON-serialized SBP. If an unknown SBP message type is found,
@@ -117,7 +117,7 @@ class MultiJSONLogIterator(JSONLogIterator):
     for handle in self.handles:
       handle.close()
 
-  def next(self):
+  def __next__(self):
     """
     Return the next record tuple from log files containing
     JSON-serialized SBP. If an unknown SBP message type
