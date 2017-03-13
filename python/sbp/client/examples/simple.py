@@ -34,6 +34,8 @@ def main():
         for msg, metadata in source.filter(SBP_MSG_BASELINE_NED):
           # Print out the N, E, D coordinates of the baseline
           print("%.4f,%.4f,%.4f" % (msg.n * 1e-3, msg.e * 1e-3, msg.d * 1e-3))
+          #print(metadata)
+          
       except KeyboardInterrupt:
         pass
 

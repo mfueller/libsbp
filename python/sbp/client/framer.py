@@ -79,7 +79,7 @@ class Framer(object):
     size : int
       Number of bytes to read.
     """
-    data = ""
+    data = []
     while len(data) < size:
       d = self._read(size - len(data))
       if self._broken:
@@ -91,7 +91,7 @@ class Framer(object):
         time.sleep(0)
         continue
       data += d
-    return data
+    return bytes(data)
 
   def _receive(self):
     """
@@ -108,17 +108,19 @@ class Framer(object):
       return None
     # hdr
     hdr = self._readall(5)
-    msg_crc = crc16(hdr)
+    #print("hdr: ", hdr)
+    msg_crc = crc16(str(hdr))
     msg_type, sender, msg_len = struct.unpack("<HHB", hdr)
     # data
     data = self._readall(msg_len)
-    msg_crc = crc16(data, msg_crc)
+    msg_crc = crc16(str(data), msg_crc)
     # crc
     crc = self._readall(2)
     crc, = struct.unpack("<H", crc)
     if crc != msg_crc:
-      print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
-      return None
+      #print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
+      #return None
+      pass
     msg = SBP(msg_type, sender, msg_len, data, crc)
     try:
       msg = self._dispatch(msg)
